@@ -22,7 +22,7 @@ body {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    z-index: -1; /* Уводим на задний план */
+    z-index: -1;
     background: radial-gradient(circle at bottom, #1b2735 0%, #090a0f 100%);
 }
 
@@ -37,8 +37,8 @@ body {
     position: fixed;
     top: 0; width: 100%;
     padding: 20px 0;
-    background: rgba(13, 15, 26, 0.8); /* Полупрозрачность */
-    backdrop-filter: blur(10px); /* Эффект стекла */
+    background: rgba(13, 15, 26, 0.8);
+    backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
@@ -105,10 +105,13 @@ body {
     margin-bottom: 20px;
 }
 
+/* Исправленный класс для текста с градиентом */
 .accent-text {
-    color: transparent;
     background: linear-gradient(90deg, #4b69ff, #00d4ff);
-    -webkit-background-clip: text; /* Градиентный текст */
+    -webkit-background-clip: text;
+    background-clip: text; 
+    color: transparent;
+    -webkit-text-fill-color: transparent; /* Для полной поддержки */
 }
 
 .hero p {
