@@ -2,6 +2,7 @@
     --bg-color: #0d0f1a;
     --card-bg: #1a1f35;
     --accent: #4b69ff;
+    --accent-glow: rgba(75, 105, 255, 0.5); /* Для свечения */
     --text-main: #ffffff;
     --text-muted: #a0a0b0;
     --font-head: 'Orbitron', sans-serif;
@@ -10,11 +11,21 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
     font-family: var(--font-body);
     overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Блокировка скролла, когда открыто меню */
+body.no-scroll {
+    overflow: hidden;
 }
 
 /* --- Canvas Background --- */
@@ -37,10 +48,11 @@ body {
     position: fixed;
     top: 0; width: 100%;
     padding: 20px 0;
-    background: rgba(13, 15, 26, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(13, 15, 26, 0.85); /* Чуть темнее для читаемости */
+    backdrop-filter: blur(15px);
     z-index: 1000;
     border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: 0.3s;
 }
 
 .nav-container {
@@ -57,209 +69,305 @@ body {
     font-weight: 700;
     font-size: 1.5rem;
     letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logo:hover {
+    text-shadow: 0 0 15px var(--accent-glow); /* Свечение лого */
 }
 
 .nav-menu a {
     color: var(--text-main);
     text-decoration: none;
     margin-left: 30px;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 500;
     text-transform: uppercase;
     transition: 0.3s;
     position: relative;
+    padding: 5px 0;
 }
 
 .nav-menu a:hover, .nav-menu a.active {
     color: var(--accent);
 }
 
+/* Анимация подчеркивания ссылки */
 .nav-menu a::after {
     content: '';
     position: absolute;
     width: 0%; height: 2px;
-    bottom: -5px; left: 0;
+    bottom: 0; left: 0;
     background: var(--accent);
-    transition: 0.3s;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-menu a:hover::after { width: 100%; }
 
-/* --- Mobile Menu Burger --- */
-.burger { display: none; cursor: pointer; }
-.burger div { width: 25px; height: 3px; background: white; margin: 5px; transition: 0.3s; }
+/* --- Burger Menu --- */
+.burger { display: none; cursor: pointer; z-index: 1001; }
+.burger div { 
+    width: 25px; height: 3px; 
+    background: white; margin: 5px; 
+    transition: 0.3s ease; 
+    border-radius: 2px;
+}
+
+/* Анимация превращения бургера в крестик */
+.burger.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+.burger.toggle .line2 { opacity: 0; }
+.burger.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
 
 /* --- Hero --- */
 .hero {
-    height: 100vh;
+    min-height: 100vh; /* min-height лучше для адаптива */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding-top: 80px;
+    padding: 120px 20px 80px; /* Отступы, чтобы хедер не перекрывал */
 }
 
 .hero h1 {
     font-family: var(--font-head);
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 5vw, 4.5rem); /* Умный размер шрифта (Clamp) */
     line-height: 1.1;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
-/* Исправленный класс для текста с градиентом */
 .accent-text {
     background: linear-gradient(90deg, #4b69ff, #00d4ff);
     -webkit-background-clip: text;
     background-clip: text; 
     color: transparent;
-    -webkit-text-fill-color: transparent; /* Для полной поддержки */
+    -webkit-text-fill-color: transparent;
+    /* Добавим легкую анимацию градиента */
+    background-size: 200% auto;
+    animation: gradientMove 5s infinite alternate;
+}
+
+@keyframes gradientMove {
+    from { background-position: 0% center; }
+    to { background-position: 100% center; }
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 2vw, 1.25rem); /* Адаптивный шрифт */
     color: var(--text-muted);
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto 40px;
 }
 
-/* --- Buttons --- */
+/* --- Buttons (Micro-interactions) --- */
 .btn {
-    padding: 12px 30px;
-    border-radius: 5px;
+    padding: 14px 35px;
+    border-radius: 50px; /* Более современные скругления */
     text-decoration: none;
     font-weight: 600;
     text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
     transition: 0.3s;
     display: inline-block;
-    margin: 0 10px;
+    margin: 10px;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary {
     background: var(--accent);
     color: white;
-    box-shadow: 0 0 15px rgba(75, 105, 255, 0.4);
+    box-shadow: 0 0 20px rgba(75, 105, 255, 0.3);
+    border: 1px solid transparent;
 }
 
 .btn-primary:hover {
     background: #3a54d6;
-    box-shadow: 0 0 25px rgba(75, 105, 255, 0.7);
-    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(75, 105, 255, 0.6);
+    transform: translateY(-3px);
 }
 
 .btn-outline {
-    border: 1px solid white;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
     color: white;
 }
 
 .btn-outline:hover {
-    background: white;
-    color: var(--bg-color);
+    background: rgba(255,255,255,0.1);
+    border-color: white;
+    transform: translateY(-3px);
 }
 
-/* --- Sections General --- */
+/* --- Sections --- */
 .section { padding: 100px 0; }
 .section-title {
     font-family: var(--font-head);
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vw, 2.5rem);
     margin-bottom: 60px;
     text-align: center;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-/* --- Tech Cards --- */
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px; height: 3px;
+    background: var(--accent);
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+/* --- Tech Cards (Hover Effects) --- */
 .grid-3 {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
 }
 
 .card {
-    background: var(--card-bg);
+    background: rgba(26, 31, 53, 0.6); /* Полупрозрачность */
+    backdrop-filter: blur(10px);
     padding: 40px;
-    border-radius: 15px;
+    border-radius: 20px;
     border: 1px solid rgba(255,255,255,0.05);
-    transition: 0.4s;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Пружинистая анимация */
 }
 
 .card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-15px) scale(1.02);
     border-color: var(--accent);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    background: rgba(26, 31, 53, 0.9);
 }
 
-.card .icon { font-size: 3rem; margin-bottom: 20px; }
-.card h3 { font-family: var(--font-head); margin-bottom: 15px; }
-.card p { color: var(--text-muted); }
+.card .icon { 
+    font-size: 3.5rem; 
+    margin-bottom: 25px; 
+    display: inline-block;
+    transition: 0.3s;
+}
 
-/* --- Project Preview Grid --- */
+.card:hover .icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.card h3 { font-family: var(--font-head); margin-bottom: 15px; font-size: 1.3rem; }
+.card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+
+/* --- Projects (Fix Images) --- */
 .grid-2 {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
 }
 
 .project-card {
     position: relative;
-    height: 350px;
-    border-radius: 15px;
+    height: 400px; /* Фиксированная высота */
+    border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+/* Фикс растягивания картинок */
 .project-card img {
     width: 100%; height: 100%;
-    object-fit: cover;
-    transition: 0.5s;
+    object-fit: cover; /* Ключевое свойство */
+    transition: transform 0.6s ease;
 }
 
 .overlay {
     position: absolute;
-    bottom: -100%; left: 0;
+    bottom: 0; left: 0;
     width: 100%; height: 100%;
-    background: linear-gradient(to top, rgba(13,15,26,0.95), transparent);
+    background: linear-gradient(to top, rgba(13,15,26,0.95) 10%, rgba(13,15,26,0.4) 50%, transparent 100%);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 30px;
-    transition: 0.4s;
+    padding: 40px 30px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.4s ease;
 }
 
+/* Hover State for Projects */
 .project-card:hover img { transform: scale(1.1); }
-.project-card:hover .overlay { bottom: 0; }
+.project-card:hover .overlay { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
 
-.overlay h3 { font-family: var(--font-head); font-size: 1.5rem; }
-.overlay a { color: var(--accent); text-decoration: none; font-weight: bold; margin-top: 10px; }
+.overlay h3 { 
+    font-family: var(--font-head); 
+    font-size: 1.8rem; 
+    margin-bottom: 10px;
+    transform: translateY(10px);
+    transition: 0.4s delay 0.1s;
+}
+
+.overlay a { 
+    color: var(--accent); 
+    text-decoration: none; 
+    font-weight: 700; 
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
 
 /* --- Footer --- */
 footer {
-    padding: 50px 0;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 60px 0;
+    border-top: 1px solid rgba(255,255,255,0.05);
     background: #090a0f;
-    margin-top: 50px;
+    margin-top: 80px;
+    text-align: center;
 }
 
 .footer-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.socials a { color: var(--text-muted); margin-left: 20px; text-decoration: none; transition: 0.3s; }
-.socials a:hover { color: var(--accent); }
-
-/* --- Responsive --- */
+/* --- Mobile Adaptability (Исправления) --- */
 @media (max-width: 768px) {
     .nav-menu {
-        position: absolute;
-        top: 80px; right: 0;
+        position: fixed; /* Фиксируем, чтобы перекрывало всё */
+        top: 0; right: 0;
         height: 100vh;
-        width: 100%;
-        background: var(--bg-color);
+        width: 100%; /* На всю ширину */
+        background: rgba(13, 15, 26, 0.98); /* Почти непрозрачный */
         flex-direction: column;
         justify-content: center;
         align-items: center;
         transform: translateX(100%);
-        transition: 0.4s;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 999; /* Ниже бургера, но выше контента */
     }
+    
     .nav-menu.active { transform: translateX(0%); }
+    
+    .nav-menu a {
+        font-size: 1.5rem; /* Крупный текст меню */
+        margin: 20px 0;
+    }
+
     .burger { display: block; }
-    .hero h1 { font-size: 2.5rem; }
+    
+    /* Текст на главной */
+    .hero { padding-top: 100px; }
+    .grid-2 { grid-template-columns: 1fr; } /* Одна колонка проектов */
+    .project-card { height: 300px; }
+    
+    .overlay { opacity: 1; transform: translateY(0); background: linear-gradient(to top, rgba(13,15,26,0.9) 20%, transparent); }
+    
+    .footer-content { flex-direction: column; }
 }
