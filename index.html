@@ -1,96 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lens Master | Portfolio</title>
+    <title>Space•Lab | Future of Tech</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
 
-    <header class="hero">
-        <div class="hero-content hidden">
-            <h1>I capture your best moments</h1>
-            <a href="#gallery" class="btn">View Gallery</a>
+    <canvas id="space-canvas"></canvas>
+
+    <header class="header">
+        <div class="container nav-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="#4b69ff" stroke-width="2"/>
+                    <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="#fff"/>
+                </svg>
+                <span>Space•Lab</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="active">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
         </div>
     </header>
 
-    <section class="about section-padding hidden">
-        <div class="container">
-            <img src="https://images.unsplash.com/photo-1554048612-387768052bf7?auto=format&fit=crop&w=200&q=80" alt="Photographer" class="avatar">
-            <h2>Hi, I'm Alex</h2>
-            <p>Я ловлю свет и эмоции. Моя цель — сохранить ваши воспоминания живыми, искренними и чертовски красивыми. Фотография для меня не просто работа, а способ остановить время.</p>
-        </div>
-    </section>
-
-    <section id="gallery" class="gallery section-padding hidden">
-        <div class="container">
-            <h2>Gallery</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item"><img src="https://picsum.photos/400/400?random=1" alt=""><div class="overlay">View</div></div>
-                <div class="gallery-item"><img src="https://picsum.photos/400/400?random=2" alt=""><div class="overlay">View</div></div>
-                <div class="gallery-item"><img src="https://picsum.photos/400/400?random=3" alt=""><div class="overlay">View</div></div>
-                <div class="gallery-item"><img src="https://picsum.photos/400/400?random=4" alt=""><div class="overlay">View</div></div>
-                <div class="gallery-item"><img src="https://picsum.photos/400/400?random=5" alt=""><div class="overlay">View</div></div>
-                <div class="gallery-item"><img src="https://picsum.photos/400/400?random=6" alt=""><div class="overlay">View</div></div>
-                <div class="gallery-item"><img src="https://picsum.photos/400/400?random=7" alt=""><div class="overlay">View</div></div>
-                <div class="gallery-item"><img src="https://picsum.photos/400/400?random=8" alt=""><div class="overlay">View</div></div>
-                <div class="gallery-item"><img src="https://picsum.photos/400/400?random=9" alt=""><div class="overlay">View</div></div>
+    <section class="hero">
+        <div class="container hero-content" data-aos="fade-up">
+            <h1>Building the Future <br><span class="accent-text">Among the Stars</span></h1>
+            <p>Мы разрабатываем передовые спутниковые системы и ИИ для освоения дальнего космоса.</p>
+            <div class="buttons">
+                <a href="projects.html" class="btn btn-primary">Our Projects</a>
+                <a href="about.html" class="btn btn-outline">Learn More</a>
             </div>
         </div>
     </section>
 
-    <section class="services section-padding hidden">
+    <section class="section tech">
         <div class="container">
-            <h2>Services</h2>
-            <div class="services-grid">
-                <div class="card">
-                    <div class="icon">💍</div>
-                    <h3>Wedding</h3>
-                    <p class="price">from $800</p>
+            <h2 class="section-title" data-aos="fade-right">Our Technologies</h2>
+            <div class="grid-3">
+                <div class="card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon">🛰️</div>
+                    <h3>Satellite Systems</h3>
+                    <p>Автономные модули связи нового поколения с квантовым шифрованием.</p>
                 </div>
-                <div class="card">
-                    <div class="icon">📸</div>
-                    <h3>Portraits</h3>
-                    <p class="price">from $200</p>
+                <div class="card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="icon">🧠</div>
+                    <h3>Neural AI</h3>
+                    <p>Искусственный интеллект для навигации в условиях глубокого вакуума.</p>
                 </div>
-                <div class="card">
-                    <div class="icon">💡</div>
-                    <h3>Studio Work</h3>
-                    <p class="price">from $350</p>
+                <div class="card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="icon">🚀</div>
+                    <h3>Propulsion</h3>
+                    <p>Ионные двигатели повышенной тяги для межпланетных перелетов.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="testimonials section-padding hidden">
+    <section class="section projects-preview">
         <div class="container">
-            <h2>What People Say</h2>
-            <div class="testimonials-grid">
-                <div class="review-card"><p>"Нереальные фотки! Алекс увидел меня такой, какой я себя не знала."</p><span>— Anna K.</span></div>
-                <div class="review-card"><p>"Профи своего дела. Свадебный альбом просто космос."</p><span>— Mark & Lora</span></div>
-                <div class="review-card"><p>"Быстро, качественно и с душой. Рекомендую!"</p><span>— Elena S.</span></div>
+            <h2 class="section-title" data-aos="fade-left">Latest Missions</h2>
+            <div class="grid-2">
+                <div class="project-card" data-aos="flip-up">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" alt="Project 1">
+                    <div class="overlay">
+                        <h3>Project ORION</h3>
+                        <p>Орбитальная станция наблюдения</p>
+                        <a href="project-page.html">View Case →</a>
+                    </div>
+                </div>
+                <div class="project-card" data-aos="flip-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?auto=format&fit=crop&w=800&q=80" alt="Project 2">
+                    <div class="overlay">
+                        <h3>Cyber Rover Mk.II</h3>
+                        <p>Марсоход с ИИ навигацией</p>
+                        <a href="project-page.html">View Case →</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <section class="contact section-padding hidden">
-        <div class="container">
-            <h2>Get in Touch</h2>
-            <form>
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Message" rows="4" required></textarea>
-                <button type="submit" class="btn">Send Message</button>
-            </form>
         </div>
     </section>
 
     <footer>
-        <p>© 2025 Lens Master. All rights reserved.</p>
+        <div class="container footer-content">
+            <div class="footer-logo">Space•Lab © 2025</div>
+            <div class="socials">
+                <a href="#">Discord</a>
+                <a href="#">Twitter/X</a>
+                <a href="#">GitHub</a>
+            </div>
+        </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
